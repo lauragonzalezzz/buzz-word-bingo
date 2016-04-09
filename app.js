@@ -20,6 +20,7 @@ app.post('/buzzword', urlencodedParser, function(req, res){
     req.body.hasOwnProperty('score')){
     req.body.score = Number(req.body.score);
     buzzObj.push(req.body);
+    console.log('buzzObj',buzzObj);
     return res.send({ "success" : true })
   }
   else {
@@ -31,17 +32,24 @@ app.put('/buzzwords', urlencodedParser, function(req, res){
   if (!req.body){
     return res.sendStatus(400);
   }
-  buzzObj.forEach(function(){
-    if ((buzzObj.buzzword == req.body.buzzword) &&
+  for (var i = 0; i < buzzObj.length; i++){
+    console.log('buzzObj.buzzword',buzzObj[i].buzzword);
+    console.log('req.body.buzzword',req.body.buzzword);
+    console.log(req.body.buzzword === buzzObj[i].buzzword);
+    if ((buzzObj[i].buzzword == req.body.buzzword) &&
       req.body.hasOwnProperty('heard')){
-      buzzObj.heard = Boolean(req.body.heard);
+      buzzObj[i].heard = Boolean(req.body.heard);
+    console.log('buzzObj[i]',buzzObj[i]);
       return res.send({ "success" : true, "newScore" : buzzObj.score });
     }
+
+  }
+  // buzzObj.forEach(function(){
     // else {
     //   return res.send({ "success" : false });
     // }
 
-  }); //ends FOR EACH
+  // }); //ends FOR EACH
   // }
 });
 
