@@ -33,24 +33,14 @@ app.put('/buzzwords', urlencodedParser, function(req, res){
     return res.sendStatus(400);
   }
   for (var i = 0; i < buzzObj.length; i++){
-    console.log('buzzObj.buzzword',buzzObj[i].buzzword);
-    console.log('req.body.buzzword',req.body.buzzword);
-    console.log(req.body.buzzword === buzzObj[i].buzzword);
     if ((buzzObj[i].buzzword == req.body.buzzword) &&
       req.body.hasOwnProperty('heard')){
       buzzObj[i].heard = Boolean(req.body.heard);
-    console.log('buzzObj[i]',buzzObj[i]);
+    buzzObj[i].score += 1;
       return res.send({ "success" : true, "newScore" : buzzObj.score });
     }
-
   }
-  // buzzObj.forEach(function(){
-    // else {
-    //   return res.send({ "success" : false });
-    // }
-
-  // }); //ends FOR EACH
-  // }
+  return res.send({ "success" : false });
 });
 
 
