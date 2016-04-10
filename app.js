@@ -9,15 +9,15 @@ var buzzObj = [];
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended : true }))
-app.use(function(req, res, next){
-  return validation(req, res, next, buzzObj);
-});
+// app.use(function(req, res, next){
+//   return validation(req, res, next, buzzObj);
+// });
 
-app.get('/buzzwords', function(req, res){
+app.get('/buzzwords',function(req, res){
   res.json({ buzzWords : buzzObj});
 });
 
-app.post('/buzzword', function(req, res){
+app.post('/buzzword', validation(buzzObj, ['buzzword', 'points']),function(req, res){
   if (buzzObj.length > 4){
     return res.status(400).send('Please remove a word before adding more, the limit is 5 words.')
   };
@@ -27,7 +27,7 @@ app.post('/buzzword', function(req, res){
   return res.send({ "success" : true })
 });
 
-app.put('/buzzword', function(req, res){
+app.put('/buzzword', validation(buzzObj, ['buzzword', 'heard']), function(req, res){
   for (var i = 0; i < buzzObj.length; i++){
     if (buzzObj[i].buzzword == req.body.buzzword){
       buzzObj[i].heard = Boolean(req.body.heard);
