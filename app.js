@@ -17,6 +17,9 @@ app.post('/buzzword', function(req, res){
   if (!req.body){
     return res.sendStatus(400);
   }
+  if (buzzObj.length > 4){
+    return res.status(400).send('Please remove a word before adding more, the limit is 5 words.')
+  };
   if (typeof req.body.buzzword === 'string' &&
     req.body.hasOwnProperty('points')){
     req.body.points = Number(req.body.points);
