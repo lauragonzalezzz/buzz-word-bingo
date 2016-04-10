@@ -2,7 +2,8 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
-var urlencodedParser = bodyParser.urlencoded({ extended : true })
+var urlencodedParser = bodyParser.urlencoded({ extended : true });
+var score = 0;
 var buzzObj = [];
 
 app.use(express.static('public'));
@@ -17,10 +18,9 @@ app.post('/buzzword', urlencodedParser, function(req, res){
     return res.sendStatus(400);
   }
   if (typeof req.body.buzzword === 'string' &&
-    req.body.hasOwnProperty('score')){
-    req.body.score = Number(req.body.score);
+    req.body.hasOwnProperty('points')){
+    req.body.points = Number(req.body.points);
     buzzObj.push(req.body);
-    console.log('buzzObj',buzzObj);
     return res.send({ "success" : true })
   }
   else {
@@ -36,13 +36,35 @@ app.put('/buzzwords', urlencodedParser, function(req, res){
     if ((buzzObj[i].buzzword == req.body.buzzword) &&
       req.body.hasOwnProperty('heard')){
       buzzObj[i].heard = Boolean(req.body.heard);
-    buzzObj[i].score += 1;
-      return res.send({ "success" : true, "newScore" : buzzObj.score });
+      score += buzzObj[i].points;
+      return res.send({ "success" : true, "newScore" : score });
     }
   }
   return res.send({ "success" : false });
 });
 
+app.delete('/buzzwords', urlencodedParser, function(req, res){
+  if (!req.body){
+    return res.send({ "success" : false })
+  }
+  for (var i = 0; i < buzzObj.length; i++){
+    if (buzzObj[i].buzzword === req.body.buzzword){
+      var index = i;
+      buzzObj.splice(i, 1);
+      return res.send({"success" : true });
+    }
+  }
+  return res.send({"success" : false });
+});
+
+app.post('/reset', function(){
+  if (!req.body){
+    return res.send({ "success" : false });
+  }
+  if (req.body.reset === true){
+    buzzObj = [];
+  }
+});
 
 var server = app.listen(8080, function(){
   console.log("App Listening!");
