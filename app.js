@@ -73,6 +73,3 @@ app.post('/reset', function(req , res){
 var server = app.listen(8080, function(){
   console.log("App Listening!");
 });
-
-//make validation for 5 words
-//set option to overwrite a particular word
