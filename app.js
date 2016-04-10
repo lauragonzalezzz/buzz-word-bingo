@@ -63,6 +63,7 @@ app.post('/reset', function(){
   }
   if (req.body.reset === true){
     buzzObj = [];
+    return res.send({ "success" : true });
   }
 });
 
