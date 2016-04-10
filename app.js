@@ -13,7 +13,7 @@ app.get('/buzzwords', function(req, res){
   res.json({ buzzWords : buzzObj});
 });
 
-app.post('/buzzword', urlencodedParser, function(req, res){
+app.post('/buzzword', function(req, res){
   if (!req.body){
     return res.sendStatus(400);
   }
@@ -28,7 +28,7 @@ app.post('/buzzword', urlencodedParser, function(req, res){
   }
 });
 
-app.put('/buzzwords', urlencodedParser, function(req, res){
+app.put('/buzzwords', function(req, res){
   if (!req.body){
     return res.sendStatus(400);
   }
@@ -43,7 +43,7 @@ app.put('/buzzwords', urlencodedParser, function(req, res){
   return res.send({ "success" : false });
 });
 
-app.delete('/buzzwords', urlencodedParser, function(req, res){
+app.delete('/buzzwords', function(req, res){
   if (!req.body){
     return res.send({ "success" : false })
   }
@@ -70,3 +70,6 @@ app.post('/reset', function(req , res){
 var server = app.listen(8080, function(){
   console.log("App Listening!");
 });
+
+//make validation for 5 words
+//set option to overwrite a particular word
