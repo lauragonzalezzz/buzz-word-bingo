@@ -57,14 +57,14 @@ app.delete('/buzzwords', urlencodedParser, function(req, res){
   return res.send({"success" : false });
 });
 
-app.post('/reset', function(){
+app.post('/reset', function(req , res){
   if (!req.body){
     return res.send({ "success" : false });
   }
-  if (req.body.reset === true){
+  if (req.body.reset === 'true'){
     buzzObj = [];
-    return res.send({ "success" : true });
   }
+  return res.send({ "success" : true });
 });
 
 var server = app.listen(8080, function(){
