@@ -58,6 +58,9 @@ app.post('/reset', function(req , res){
   return res.send({ "success" : true });
 });
 
-var server = app.listen(8080, function(){
+if(!module.parent){
+  var server = app.listen(8080, function(){
   console.log("App Listening!");
 });
+
+module.exports = app.js
