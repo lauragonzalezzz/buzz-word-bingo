@@ -67,7 +67,21 @@ describe('PUT /buzzword', function(){
     .expect(400, done);
   });
 
-
+  it('should return a success message and new score', function(done){
+    var body5 = {'buzzword' : 'scala', 'points' : '2'};
+    var body6 = {'buzzword' : 'scala', 'heard' : true}
+    request(app)
+    .post('/buzzword')
+    .type('form')
+    .send(body5)
+    .expect(200, { 'success' : true }, function(err, res){
+      request(app)
+      .put('/buzzword')
+      .type('form')
+      .send(body6)
+      .expect(200, { 'success' : true, newScore : 2 }, done);
+    });
+  });
 
 });
 
