@@ -61,6 +61,7 @@ app.post('/reset', function(req , res){
 if(!module.parent){
   var server = app.listen(8080, function(){
   console.log("App Listening!");
-});
+  });
+}
 
-module.exports = app.js
+module.exports = app
