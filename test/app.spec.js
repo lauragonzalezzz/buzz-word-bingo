@@ -82,6 +82,25 @@ describe('PUT /buzzword', function(){
       .expect(200, { 'success' : true, newScore : 2 }, done);
     });
   });
+});
+
+describe('DELETE /buzzword', function(){
+
+  it('should return an error message', function(done){
+    var body7 = {'buzzword' : 'scala', 'points' : '2'};
+    var body8 = { 'buzzword' : 'happi'}
+    request(app)
+    .post('/buzzword')
+    .type('form')
+    .send(body7)
+    .expect(200, { 'success' : true }, function(err, res){
+      request(app)
+      .delete('/buzzword')
+      .type('form')
+      .send(body8)
+      .expect(400, { 'success' : false }, done)
+    });
+  });
 
 });
 
