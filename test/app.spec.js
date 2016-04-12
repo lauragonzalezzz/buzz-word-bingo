@@ -135,7 +135,11 @@ describe('POST /reset', function(){
     .post('/reset')
     .type('form')
     .send({ "reset" : true })
-    .expect(200, { 'success' : true }, done)
+    .expect(200, { 'success' : true }, function(err, res){
+      request(app)
+      .get('/buzzwords')
+      .expect(200, { "buzzWords" : [] }, done)
+    });
   });
 
 });
