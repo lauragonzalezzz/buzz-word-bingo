@@ -39,20 +39,20 @@ describe('POST /buzzword', function(){
   });
 
   it('should return a success message', function(done){
-    var body = {'buzzword' : 'scala', 'points' : '2'};
-    request(app)
-    .post('/buzzword')
-    .type('form')
-    .send(body)
-    .expect(200, { 'success' : true }, done);
-  });
-
-  it('should return an error message upon incorrect data', function(done){
-    var body2 = {'buzzword' : 'elm', 'score' : 'five'};
+    var body2 = {'buzzword' : 'responsive', 'points' : '2'};
     request(app)
     .post('/buzzword')
     .type('form')
     .send(body2)
+    .expect(200, { 'success' : true }, done);
+  });
+
+  it('should return an error message upon incorrect data', function(done){
+    var body3 = {'buzzword' : 'elm', 'score' : 'five'};
+    request(app)
+    .post('/buzzword')
+    .type('form')
+    .send(body3)
     .expect(400, done);
   });
 
@@ -68,8 +68,8 @@ describe('PUT /buzzword', function(){
   });
 
   it('should return a success message and new score', function(done){
-    var body5 = {'buzzword' : 'scala', 'points' : '2'};
-    var body6 = {'buzzword' : 'scala', 'heard' : true}
+    var body5 = {'buzzword' : 'regression testing', 'points' : '2'};
+    var body6 = {'buzzword' : 'regression testing', 'heard' : true}
     request(app)
     .post('/buzzword')
     .type('form')
@@ -87,8 +87,8 @@ describe('PUT /buzzword', function(){
 describe('DELETE /buzzword', function(){
 
   it('should return an error message', function(done){
-    var body7 = {'buzzword' : 'scala', 'points' : '2'};
-    var body8 = { 'buzzword' : 'happi'}
+    var body7 = {'buzzword' : 'big o complexity', 'points' : '2'};
+    var body8 = { 'buzzword' : 'closure'}
     request(app)
     .post('/buzzword')
     .type('form')
@@ -102,6 +102,23 @@ describe('DELETE /buzzword', function(){
     });
   });
 
+  it('should delete the buzzword from memory', function(done){
+    var body9 = {'buzzword' : 'hoisting', 'points' : '2'};
+    var body10 = { 'buzzword' : 'hoisting'}
+    request(app)
+    .post('/buzzword')
+    .type('form')
+    .send(body9)
+    .expect(200, { 'success' : true }, function(err, res){
+      request(app)
+      .delete('/buzzword')
+      .type('form')
+      .send(body10)
+      .expect(200, { 'success' : true }, done)
+    });
+  });
+
 });
 
 });
+
