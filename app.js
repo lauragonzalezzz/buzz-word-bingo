@@ -52,10 +52,14 @@ app.delete('/buzzword', validation(['buzzword']), function(req, res){
 });
 
 app.post('/reset', function(req , res){
+  console.log('req.body.reset',req.body.reset);
   if (req.body.reset === 'true'){
     buzzObj = [];
+    return res.status(200).send({ "success" : true });
   }
-  return res.send({ "success" : true });
+  else {
+    return res.status(400).send( { "success" : false })
+  }
 });
 
 if(!module.parent){
