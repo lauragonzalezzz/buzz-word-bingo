@@ -55,6 +55,7 @@ describe('POST /buzzword', function(){
     .send(body3)
     .expect(400, done);
   });
+});
 
 describe('PUT /buzzword', function(){
 
@@ -117,8 +118,17 @@ describe('DELETE /buzzword', function(){
       .expect(200, { 'success' : true }, done)
     });
   });
-
 });
+
+describe('POST /reset', function(){
+
+  it('should erase all buzzwords from memory', function(done){
+    request(app)
+    .post('/reset')
+    .type('form')
+    .send({ "reset" : true })
+    .expect(200, { 'success' : true }, done)
+  });
 
 });
 
