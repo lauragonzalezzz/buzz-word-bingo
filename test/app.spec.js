@@ -126,6 +126,14 @@ describe('POST /reset', function(){
     request(app)
     .post('/reset')
     .type('form')
+    .send({ "reset" : false })
+    .expect(400, { 'success' : false }, done)
+  });
+
+  it('should erase all buzzwords from memory', function(done){
+    request(app)
+    .post('/reset')
+    .type('form')
     .send({ "reset" : true })
     .expect(200, { 'success' : true }, done)
   });
