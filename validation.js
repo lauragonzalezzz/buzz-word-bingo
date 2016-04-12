@@ -4,7 +4,7 @@ var validation = function(array){
       return !req.body.hasOwnProperty(key) || req.body[key].length === 0;
     });
     if (missingReqs.length !== 0){
-      return res.sendStatus(400);
+      return res.status(400).send("You're missing: " + missingReqs);
     }
     else {
       next();
