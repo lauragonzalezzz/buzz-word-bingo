@@ -48,7 +48,7 @@ app.delete('/buzzword', validation(['buzzword']), function(req, res){
       return res.send({"success" : true });
     }
   }
-  return res.send({"success" : false });
+  return res.send(400, {"success" : false });
 });
 
 app.post('/reset', function(req , res){
